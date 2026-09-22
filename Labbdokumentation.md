@@ -95,6 +95,11 @@ ipconfig /all  "kontrollerade om maskinen fick ip adressen 192.168.10.51 samt at
 
 
 
+### Nätverkstabell
+| Hostname | Operativsystem | IP-adress | Subnätmask | Standard Gateway |
+|---|---|---|---|---|
+| Server | Ubuntu Server | 192.168.10.50 | 255.255.255.0 (/24) | Ingen |
+| Jano | Windows 11 | 192.168.10.51 | 255.255.255.0 (/24) | Ingen |
 
 
 
