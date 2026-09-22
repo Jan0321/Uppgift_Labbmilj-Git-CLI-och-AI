@@ -103,8 +103,15 @@ ipconfig /all  "kontrollerade om maskinen fick ip adressen 192.168.10.51 samt at
 
 
 
+### Nätvrksanslutning
+
+ping 192.168.10.50  "Testade att pinga från windows 11 till Ubunto server, det gick att pinga lyckades.
+Lägger till bilden sen "ping från win11 till linux "
 
 
 
+ping 192.168.10.51       "inget hände
+ping -c 4 192.168.10.51  testade att pinga från Ubunto server till windows 11, Det lyckades inte. då skickade jag 4 packet till windows 11 men fick 100% packet loss
 
+lägger bilden senare den heter "ping linux till windows packet loss "
 
