@@ -4,12 +4,10 @@
 
 
 
-## Git - Versionshantering
+## Git - Versionshantering och skapa Projektmapp
 
 För att verionshantera mitt arbete använde jag Git bash och Github.
 
-
-### Skapa Projektmapp
 
 cd ~\dokuments          "för att navigera till dokuments mappen"
 mkdir Systementor-Labb  "för att skapa mappen som heter Systementor-Labb"
@@ -67,13 +65,12 @@ git log --oneline   "5368645 (HEAD -> main) grundstruktur"
 
 
 
-
 ## Introdution
 I denna uppgift bygger jag en virtuell labbmilijö i VirtualBox med Linux och Windows 11. Jag ska konfigurera ett gemensamt närverk, arbeta med kommandon och behörigheter samt dokumentera resultat.
 
 
 
-## Labbmiljö och nätverk
+
 Jag använder Virtualbox och har installerat två virtuella maskiner:
 
 - Windows 11
