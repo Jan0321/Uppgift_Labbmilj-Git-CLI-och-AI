@@ -51,29 +51,55 @@ nothing to commit, working tree clean
 git log --oneline   "5368645 (HEAD -> main) grundstruktur"
 
 
+## Labbmiljö och nätverk
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Introdution
-I denna uppgift bygger jag en virtuell labbmilijö i VirtualBox med Linux och Windows 11. Jag ska konfigurera ett gemensamt närverk, arbeta med kommandon och behörigheter samt dokumentera resultat.
-
-
-
-
-Jag använder Virtualbox och har installerat två virtuella maskiner:
+Jag använder mig utav VirtualBox och har skapat två virtualla maskiner: 
 
 - Windows 11
-- Linux Server
+- Unbunto Server
+
+Jag bröjade med att konfigurera nätverket i båda virtuella maskinerna "VirtualBox-->Settings-->Network." Sedan ändra jag från NAT till Internal Network så att båda maskinerna kan komun lagt till namnen "Labb". Detta gjorde jag på båda maskinerna.
+
+SKA LÄGGA IN BILD HÄR
+
+
+
+### Ubunto Server
+
+ip addr show        "kontrollerade nätverkskortet. Den heter enp0s3"
+
+mcli device status  "då fick jag upp att nätverkskortet enp0s3 var frånkopplad (Disconnected)"
+
+
+sudo nmcli connection add type ethernet ifname enp0s3 con-name Labb ipv4.method manual ipv4.addresses 192.168.10.50/24     "Då skapade jag en ny nätversanslutning som heter Labb och gav servern en statisk IP-adress 192.168.10.50/24"
+
+sudo nmcli connection up Labb   "för att aktiverade jag anslutningen"
+
+ip addr show enp0s3       "då kontrollerade jag den var aktiv (UP) och har fått rätt ip adress 192.168.10.50/24"
+
+Lägger till bilden senare den heter liux ip 1
+
+
+### Windows 11
+
+Använder PowerShell
+
+ipconfig /all    "kontrollerade ip adressen. den hade en automatisk ip-adress"
+
+Network & internet --> Ethernet  Edit på IPv4 adress, Manual IP-adress: 192.168.10.51 Subnet mask: 255.255.255.0
+"Jag fick ändra manuellt i windows 11 inställningar till en statisk ip adress 192.168.10.51, subnätmask 255.255.255.0 och ingen gateway på grund av ingen router."
+Lägger bild sen den heter windows manual 1
+
+
+ipconfig /all  "kontrollerade om maskinen fick ip adressen 192.168.10.51 samt att subnätmask 255.255.255.0"
+
+
+
+
+
+
+
+
+
 
 
