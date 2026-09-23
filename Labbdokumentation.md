@@ -139,3 +139,35 @@ ping -c 4 192.168.10.51  "skickade 4packet till windows 11 då fick 0% packet lo
 lägger till bilden senare. "Ping från ubunto till win
 
 
+
+
+
+
+### Katalog & fil
+
+sudo mkdir -p /var/systementor/kosultdata      "för att skapa första katalogen"
+
+ls -ld '/var/systementor/konsultdata           "för att kontrollera katalogen"
+
+
+sudo touch /var/ststenentor/konsultdata/anteckningar.txt "skapar filen"
+
+ls -ld '/var/systementor/konsultdata           "för att kontrollera katalogens innehåll"
+
+lägger till bilden senare namn; Skapar map samt txt
+
+
+sudo groupadd konsulter         "för att skapa grouppen konsulter"
+
+
+getent group konsulter                "för att kontrollera grouppen (konsulter:x:1001)"
+
+sudo chgrp -R konsulter /var/systementor/konsultdata "ändrade gruppägaren och innehåll till konsulter"
+
+lägger till bilden sernare i uppgiften namn_ katalogen samt filen tillhör konsulter
+
+
+
+
+
+
