@@ -168,6 +168,20 @@ lägger till bilden sernare i uppgiften namn_ katalogen samt filen tillhör kons
 
 
 
+### Behörigheter 
+
+sudo chmod 750 /var/systementor/konsultdata    "behörigheten: admin fullkontroll, gruppen kan läsa och köra och användare har inga behörigheter"
+
+sudo chmod 640 /var/systementor/konsultdata/anteckningar.txt "behörigheter: admin kan läsa och skriva i filen, grouppen kan läsa och användare har inga beöhrigheter"
+
+ls -la /var/systementor/konsultdata  "försökte att kontrollera katalogen men fick Permission denied, på grund av jag var inte medlem i gruppen konsulter"
+ 
+lägger till bilden senare i uppgiften namn på bilden: ![alt text](<behlrigheter till katalog och filen.png>)
+
+sudo usermod -aG konsulter vboxuser         "lagt till mig själv i grouppen konsulter"
+
+groups vboxuser               "för att kontrollera medlemskapet"
+
 
 
 
