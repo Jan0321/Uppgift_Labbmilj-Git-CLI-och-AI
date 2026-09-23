@@ -115,3 +115,27 @@ ping -c 4 192.168.10.51  testade att pinga från Ubunto server till windows 11, 
 
 lägger bilden senare den heter "ping linux till windows packet loss "
 
+
+### Felsökning
+
+Eftersom ping fungerade från Windows till ubunto börjar jag felsöka Windows
+
+
+Get-NetConnectionProfile  "för att kontrollera vilken nätverksprofil windows anväde, och det visade att Ethernet anslutningen använde profilen Public, vilket var relevant när jag felsökte brandväggen.
+lägger till bilden sedan bilden heter nätverksprofile
+
+
+Jag kontrollerade därefter reglerna för inkommande trafik i Windows Defender Firewall. Reglerna för inkommande ICMPv4 Echo Request var inte aktiverade för den aktuella Public-profilen. Det gjorde så att brandväggen blockerade inkommande ping från ubunto servern
+
+lägger till bilden "inbound rules
+
+New-NetFirewallRule -DisplayName "Tillat Ping fran Labbnat" -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Allow -Profile Public
+här skapade jag en specifik regel för ICMPv4 istället för att stänga av brandväggen. den tillåter inkommande ping förfrågan från ubunto servern.
+
+## Test
+
+ping -c 4 192.168.10.51  "skickade 4packet till windows 11 då fick 0% packet loss det gick att pinga
+
+lägger till bilden senare. "Ping från ubunto till win
+
+
