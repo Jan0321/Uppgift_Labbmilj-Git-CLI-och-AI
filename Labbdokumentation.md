@@ -60,8 +60,7 @@ Jag använder mig utav VirtualBox och har skapat två virtualla maskiner:
 
 Jag bröjade med att konfigurera nätverket i båda virtuella maskinerna "VirtualBox-->Settings-->Network." Sedan ändra jag från NAT till Internal Network så att båda maskinerna kan komun lagt till namnen "Labb". Detta gjorde jag på båda maskinerna.
 
-SKA LÄGGA IN BILD HÄR
-
+![Internal Network](image-1.png)
 
 
 ### Ubunto Server
