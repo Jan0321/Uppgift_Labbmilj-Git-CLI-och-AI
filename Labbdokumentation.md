@@ -187,3 +187,26 @@ groups                        "nu ser jag att jag är med i grouppen konsulter"
 lägger till bilden här senare namn : ![alt text](<behörighetsprobelm löst.png>)
 
 
+
+
+ ### Windows 11 skapa katlog
+
+ New-Item -path  "C:\Systementor\Konsultdata" -ItemType Directory -Force "skapade katalogen"
+ Get-Item "C:\Systementor\Konsultdata"  "kontrollerade att katalogen är skapad"
+
+Get-Acl  "C:\Systementor\Konsultdata"         "för att visa vilka behörigheter katalogen hade. Resultated visade att JANO/hadda var ägaren till katalogen" 
+
+(Get-Acl "C:\Systementor\Konsultdata").Access   "för att se behhörigheterna mer detaljerat:
+BUILTIN\Administrators        FullControl
+NT AUTHORITY\SYSTEM           FullControl
+BUILTIN\Users                 ReadAndExecute
+NT AUTHORITY\Authenticated Users   Modify
+IsInherited : True
+Behörigheterna är ärvda från den överordnade katalogen.
+
+lägger till bilden här ![alt text](<ACL Access.png>)
+
+Test-Connection 192.168.10.50 -Count 4     "För att testa anslutningen från windows 11 till ubuntu server"
+
+ipconfig /all      "kontrollerade ip-adressen 192.168.10.51 och nätmasken är 255.255.255.0"
+lägger till bilden lite senare här : ![alt text](<test samt ipconfig win.png>)
