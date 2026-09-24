@@ -210,3 +210,83 @@ Test-Connection 192.168.10.50 -Count 4     "För att testa anslutningen från wi
 
 ipconfig /all      "kontrollerade ip-adressen 192.168.10.51 och nätmasken är 255.255.255.0"
 lägger till bilden lite senare här : ![alt text](<test samt ipconfig win.png>)
+
+
+### AI-användning
+
+Felsökning av ping mellan ubunto och windows:
+under mitt arbete fick jag problem när jag försökte pinga Windows 11 från Unbuntu server. Jag använde chatgpt för att få hjälp med felsökningen.
+
+
+Jag frågade Chatgpt är:
+ Jag har byggt en virtuell labbmiljö i virtualbox med två virtuella maskiner unbunto server och windows 11. båda maskinerna anvönder samma internal nätverk som heter Labb. Ubuntu server har en statisk ip 192.168.10.50/24 och windows har 192.168.10.51/24. när jag testar anslutningen, windows kan pinga till ubunto utan problem, men när jag pingar från ubuntu till windows så får jag 100% packet loss. Har kontrollerat med ip addr show Ubunto har rätt ip-adress. vad kan felet vara på att komunikationen fungerar inte mellan ubunto till windows?
+  
+  Svar från AI: 
+  Eftersom Windows kan pinga Ubuntu, men Ubuntu inte kan pinga Windows, tyder det på att själva VirtualBox-nätverket och IP-konfigurationen fungerar. Båda maskinerna ligger också i samma subnät 192.168.10.0/24. Ett troligt problem är därför att Windows blockerar inkommande ping-trafik.
+
+Ping använder protokollet ICMP. Windows Defender Firewall kan blockera inkommande ICMP Echo Request, särskilt om ditt interna VirtualBox-nätverk har klassificerats som ett Public-nätverk.
+
+1. Kontrollera nätverksprofilen i Windows
+
+Öppna PowerShell på Windows och kör:
+
+Get-NetConnectionProfile
+
+Titta framför allt efter:
+
+NetworkCategory
+
+Om den visar:
+
+NetworkCategory : Public
+
+använder Windows den mer restriktiva Public-profilen.
+
+2. Kontrollera Windows-brandväggen
+
+Öppna:
+
+wf.msc
+
+Gå till Inbound Rules och leta efter regler som heter ungefär:
+
+File and Printer Sharing (Echo Request - ICMPv4-In)
+
+Kontrollera om en regel som tillåter ICMPv4 är aktiverad för den nätverksprofil som används.
+
+Jag rekommenderar inte att stänga av hela Windows-brandväggen för att lösa problemet. Det är bättre att endast tillåta den trafik som behövs.
+
+3. Tillåt inkommande ping
+
+Om nätverket använder Public kan du öppna PowerShell som administratör och skapa en specifik regel:
+
+New-NetFirewallRule -DisplayName "Tillat Ping fran Labb" -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Allow -Profile Public
+
+Detta tillåter inkommande ICMPv4 Echo Request på Public-profilen utan att stänga av hela brandväggen.
+
+4. Testa igen från Ubuntu
+
+Kör:
+
+ping -c 4 192.168.10.51
+
+Om problemet var Windows-brandväggen bör du nu få svar, exempelvis:
+
+64 bytes from 192.168.10.51: icmp_seq=1 ...
+64 bytes from 192.168.10.51: icmp_seq=2 ...
+
+och i slutet:
+
+4 packets transmitted, 4 received, 0% packet loss
+
+Om det fortfarande blir 100% packet loss bör nästa steg vara att kontrollera Windows IP-konfiguration med ipconfig /all och verifiera att 192.168.10.51 verkligen sitter på rätt VirtualBox-nätverkskort.
+
+Det viktiga är alltså att testa hypotesen i stället för att direkt anta att brandväggen är orsaken. Om ping börjar fungera efter den specifika brandväggsändringen har du starkt stöd för att den inkommande ICMP-trafiken var det som blockerades.
+
+Utvädering: 
+Jag tyckte svaret på ai var tydlig och hjälpte mig att hitta problemet, AI föreslog att jag skulle kontrollera brandväggen i windows efterson windows kunde pinga Ubuntu. Efter jag kontrollerade nätverksprofilen med "Get-NetConnectionProfile" då såg jag att nätverket använde profile Public. Efter jag kontrollerade brandbäggen skapade jag regeln för ICMPv4 som Ai föreslog.
+Efter det så testade jag pinga igen med "ping -c 4 192.168.10.51" den här gången fick jag 0% packet loss och 4 packet recived. Då fungerade lösningen.
+Lösningen var bra efter som jag behövde inte stänga av hela brandbäggen, Samt lärde jag mig att man ska inte lita direkt på AIn svar, utan testa och kontrollera att lösningen fungerar.
+
+
+
