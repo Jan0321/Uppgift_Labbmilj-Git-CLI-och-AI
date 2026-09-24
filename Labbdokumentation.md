@@ -290,3 +290,54 @@ Lösningen var bra efter som jag behövde inte stänga av hela brandbäggen, Sam
 
 
 
+### AI -använing
+
+
+Fråga till AIn:
+
+Jag skapade katalogen /var/systementor/konsulter på ubunto server. katalogen ägs av root och gruppen konsulter, jag satte behörigheten 750 på katalogen och 640 på filen anteckningar.txt. när kag kör ls -la /var/systementor/konsultdata får jag permission denied. mitt användar namn är vboxuser. varför får jag detta fel meddelandet och hur kan jag lösa det?
+
+
+AIn svarade: 
+
+Felet beror troligtvis på att vboxuser inte har rätt behörighet till katalogen.
+
+Katalogen ägs av:
+
+root konsulter
+
+och har behörigheten 750. Det betyder:
+
+7 = ägaren (root) får läsa, skriva och köra
+5 = gruppen (konsulter) får läsa och köra
+0 = övriga användare får ingen åtkomst
+
+Om vboxuser inte är medlem i gruppen konsulter får användaren alltså ingen åtkomst och därför visas Permission denied.
+
+Jag skulle först kontrollera vilka grupper användaren tillhör:
+
+groups vboxuser
+
+Om konsulter inte finns med kan användaren läggas till i gruppen:
+
+sudo usermod -aG konsulter vboxuser
+
+Sedan kan man kontrollera igen:
+
+groups vboxuser
+
+Efter att användaren har lagts till i gruppen kan man behöva logga ut och logga in igen för att gruppmedlemskapet ska börja gälla.
+
+Efter ny inloggning kan man testa:
+
+ls -la /var/systementor/konsultdata
+
+Om vboxuser nu är medlem i gruppen konsulter bör katalogen gå att läsa.
+
+Det är bättre att lägga användaren i rätt grupp än att exempelvis ändra behörigheten till 777, eftersom 777 skulle ge alla användare onödigt stora behörigheter. På detta sätt behåller man principen om minsta möjliga behörighet.
+
+
+
+Utvädering: 
+AIs svar var tydlig och hjälpte mig att förestå varför jag fick fel meddelandet. AI förklarade att det var vboxuser som inte hade tillgång till katalogen eftersom användaren inte var medlem i grouppen konsutlter. 
+Jag följde AIs instruktioner och lag till vboxuser i gruppen konsulter med "sudo usermod -aG konsulter vboxuser" efter jag loggade ut och in igen så kontrollerade jag igen med "groups" så fungerade det och vboxuser är medlem i gruppen konsulter. sedan körde jag "ls -la /var/systementor/konsultdata" igen och kunde komma åt katalogen. 
