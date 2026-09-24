@@ -180,8 +180,10 @@ lägger till bilden senare i uppgiften namn på bilden: ![alt text](<behlrighete
 
 sudo usermod -aG konsulter vboxuser         "lagt till mig själv i grouppen konsulter"
 
-groups vboxuser               "för att kontrollera medlemskapet"
+groups vboxuser               "för att kontrollera medlemskapet, då var jag fortforadne obehörig behövde logga ut sedan loga in igen"
 
+groups                        "nu ser jag att jag är med i grouppen konsulter"
 
+lägger till bilden här senare namn : ![alt text](<behörighetsprobelm löst.png>)
 
 
