@@ -76,7 +76,7 @@ sudo nmcli connection up Labb   "för att aktiverade jag anslutningen"
 
 ip addr show enp0s3       "då kontrollerade jag den var aktiv (UP) och har fått rätt ip adress 192.168.10.50/24"
 
-Lägger till bilden senare den heter liux ip 1
+![skapar nätverksansultning](<linux ip 1.png>)
 
 
 ### Windows 11
@@ -105,14 +105,13 @@ ipconfig /all  "kontrollerade om maskinen fick ip adressen 192.168.10.51 samt at
 ### Nätvrksanslutning
 
 ping 192.168.10.50  "Testade att pinga från windows 11 till Ubunto server, det gick att pinga lyckades.
-Lägger till bilden sen "ping från win11 till linux "
-
+![Ping från windows till linuxS](image-2.png)
 
 
 ping 192.168.10.51       "inget hände
 ping -c 4 192.168.10.51  testade att pinga från Ubunto server till windows 11, Det lyckades inte. då skickade jag 4 packet till windows 11 men fick 100% packet loss
 
-lägger bilden senare den heter "ping linux till windows packet loss "
+![Packet loss Ping linuxS-->win11](image-3.png)
 
 
 ### Felsökning
@@ -126,7 +125,7 @@ lägger till bilden sedan bilden heter nätverksprofile
 
 Jag kontrollerade därefter reglerna för inkommande trafik i Windows Defender Firewall. Reglerna för inkommande ICMPv4 Echo Request var inte aktiverade för den aktuella Public-profilen. Det gjorde så att brandväggen blockerade inkommande ping från ubunto servern
 
-lägger till bilden "inbound rules
+![Inbound Rules](image-4.png)
 
 New-NetFirewallRule -DisplayName "Tillat Ping fran Labbnat" -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Allow -Profile Public
 här skapade jag en specifik regel för ICMPv4 istället för att stänga av brandväggen. den tillåter inkommande ping förfrågan från ubunto servern.
@@ -135,7 +134,7 @@ här skapade jag en specifik regel för ICMPv4 istället för att stänga av bra
 
 ping -c 4 192.168.10.51  "skickade 4packet till windows 11 då fick 0% packet loss det gick att pinga
 
-lägger till bilden senare. "Ping från ubunto till win
+![Ping från LinuxS till win11](image-5.png)
 
 
 
@@ -153,7 +152,7 @@ sudo touch /var/ststenentor/konsultdata/anteckningar.txt "skapar filen"
 
 ls -ld '/var/systementor/konsultdata           "för att kontrollera katalogens innehåll"
 
-lägger till bilden senare namn; Skapar map samt txt
+![Skapar map samt txt](image-6.png)
 
 
 sudo groupadd konsulter         "för att skapa grouppen konsulter"
@@ -163,7 +162,7 @@ getent group konsulter                "för att kontrollera grouppen (konsulter:
 
 sudo chgrp -R konsulter /var/systementor/konsultdata "ändrade gruppägaren och innehåll till konsulter"
 
-lägger till bilden sernare i uppgiften namn_ katalogen samt filen tillhör konsulter
+![chmod-getnet](image-7.png)
 
 
 
@@ -175,7 +174,7 @@ sudo chmod 640 /var/systementor/konsultdata/anteckningar.txt "behörigheter: adm
 
 ls -la /var/systementor/konsultdata  "försökte att kontrollera katalogen men fick Permission denied, på grund av jag var inte medlem i gruppen konsulter"
  
-lägger till bilden senare i uppgiften namn på bilden: ![alt text](<behlrigheter till katalog och filen.png>)
+![alt text](<behlrigheter till katalog och filen.png>)
 
 sudo usermod -aG konsulter vboxuser         "lagt till mig själv i grouppen konsulter"
 
@@ -183,7 +182,7 @@ groups vboxuser               "för att kontrollera medlemskapet, då var jag fo
 
 groups                        "nu ser jag att jag är med i grouppen konsulter"
 
-lägger till bilden här senare namn : ![alt text](<behörighetsprobelm löst.png>)
+![alt text](<behörighetsprobelm löst.png>)
 
 
 
@@ -203,12 +202,12 @@ NT AUTHORITY\Authenticated Users   Modify
 IsInherited : True
 Behörigheterna är ärvda från den överordnade katalogen.
 
-lägger till bilden här ![alt text](<ACL Access.png>)
+![alt text](<ACL Access.png>)
 
 Test-Connection 192.168.10.50 -Count 4     "För att testa anslutningen från windows 11 till ubuntu server"
 
 ipconfig /all      "kontrollerade ip-adressen 192.168.10.51 och nätmasken är 255.255.255.0"
-lägger till bilden lite senare här : ![alt text](<test samt ipconfig win.png>)
+![alt text](<test samt ipconfig win.png>)
 
 
 ### AI-användning
