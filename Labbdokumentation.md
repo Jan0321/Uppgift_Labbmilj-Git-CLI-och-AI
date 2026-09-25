@@ -76,7 +76,7 @@ sudo nmcli connection up Labb   "för att aktiverade jag anslutningen"
 
 ip addr show enp0s3       "då kontrollerade jag den var aktiv (UP) och har fått rätt ip adress 192.168.10.50/24"
 
-![skapar nätverksansultning](<linux ip 1.png>)
+![skapar nätverksansultning](image-12.png)
 
 
 ### Windows 11
@@ -174,7 +174,7 @@ sudo chmod 640 /var/systementor/konsultdata/anteckningar.txt "behörigheter: adm
 
 ls -la /var/systementor/konsultdata  "försökte att kontrollera katalogen men fick Permission denied, på grund av jag var inte medlem i gruppen konsulter"
  
-![alt text](<behlrigheter till katalog och filen.png>)
+![alt text](image-11.png)
 
 sudo usermod -aG konsulter vboxuser         "lagt till mig själv i grouppen konsulter"
 
@@ -182,7 +182,7 @@ groups vboxuser               "för att kontrollera medlemskapet, då var jag fo
 
 groups                        "nu ser jag att jag är med i grouppen konsulter"
 
-![alt text](<behörighetsprobelm löst.png>)
+![alt text](image-10.png)
 
 
 
@@ -202,13 +202,12 @@ NT AUTHORITY\Authenticated Users   Modify
 IsInherited : True
 Behörigheterna är ärvda från den överordnade katalogen.
 
-![alt text](<ACL Access.png>)
+![alt text](image-9.png)
 
 Test-Connection 192.168.10.50 -Count 4     "För att testa anslutningen från windows 11 till ubuntu server"
 
 ipconfig /all      "kontrollerade ip-adressen 192.168.10.51 och nätmasken är 255.255.255.0"
-![alt text](<test samt ipconfig win.png>)
-
+![alt text](image-8.png)
 
 ### AI-användning
 
