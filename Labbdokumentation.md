@@ -2,7 +2,10 @@
 **Datum** 15-09 2026
 **Kurs** Introduktion till yrkesrollen och grunderna i IT-infrastruktur
 
+## Introduktion
+Iden här labben har jag skapat en virtuell labbmiljö i Vitualbox med en Ubuntu server och en windows 11. Jag ska konfiguera nätverket mellan maskinerna i arbetet med kommandon och behörigheter i både Linux och windwos. Jag har använt Git för versionshantering och AI som hjälp vi felsökning.
 
+## Intord
 
 ## Git - Versionshantering och skapa Projektmapp
 
@@ -27,12 +30,27 @@ git add Labbdokumentation.md  ""
 
 ### Commits
 
-git commit -m "grundstruktur" 
+git log --oneline  "för att kontrollera commit historiken som visade resultat: 
 
-git log --oneline  "för att kontrollera commit historiken som visade resultat (5368645 (HEAD -> main) grundstruktur)"
-
-
+38008c5 Bilder
+52215e3 Lagt till bilderna
+8d1173e Lägger till bilder och uppdatera dokumentet
+64f069e AI användning #2
+400602b AI användning #1
+e9e1099 Windows 11 katalog
+d224640 Behörighetsproblem
+a187e4f Behörigheter
+4149125 kataloger filer
+eeae8de Felsökning
+390116e nätverksanslutning
+2d237ac nätverkstabell
+e0597f2 Konfiguration av win11 och ubunto ip
+b478850 Konfiguration av win11 och ubunto ip
+f556d38 dokumentation git och github
+5368645 grundstruktur
+![alt text](image-14.png)
 ### Github
+([Labbmiljö Git CLI och AI](https://github.com/Jan0321/Uppgift_Labbmilj-Git-CLI-och-AI.git))
 
 Jag skapade en repositroy på Github för att kunna lagra projektet externt.
 
@@ -40,7 +58,7 @@ git remote add origin https://github.com/Jan0321/Uppgift_Labbmilj-Git-CLI-och-AI
 
 git remote -v        "för att kontrollera att koppligen var ok"
 
-git push -u orgin main  "då skickade jag mitt lokala main branch till github"
+git push -u origin main  "då skickade jag mitt lokala main branch till github"
 
 git status              "då visade det att koppligen lyckades och är synkroiserat med repositoryt på github(On branch main
 Your branch is up to date with 'origin/main'.
@@ -48,7 +66,7 @@ Your branch is up to date with 'origin/main'.
 nothing to commit, working tree clean
 )"
 
-git log --oneline   "5368645 (HEAD -> main) grundstruktur"
+
 
 
 ## Labbmiljö och nätverk
@@ -67,7 +85,7 @@ Jag bröjade med att konfigurera nätverket i båda virtuella maskinerna "Virtua
 
 ip addr show        "kontrollerade nätverkskortet. Den heter enp0s3"
 
-mcli device status  "då fick jag upp att nätverkskortet enp0s3 var frånkopplad (Disconnected)"
+nmcli device status  "då fick jag upp att nätverkskortet enp0s3 var frånkopplad (Disconnected)"
 
 
 sudo nmcli connection add type ethernet ifname enp0s3 con-name Labb ipv4.method manual ipv4.addresses 192.168.10.50/24     "Då skapade jag en ny nätversanslutning som heter Labb och gav servern en statisk IP-adress 192.168.10.50/24"
@@ -87,7 +105,7 @@ ipconfig /all    "kontrollerade ip adressen. den hade en automatisk ip-adress"
 
 Network & internet --> Ethernet  Edit på IPv4 adress, Manual IP-adress: 192.168.10.51 Subnet mask: 255.255.255.0
 "Jag fick ändra manuellt i windows 11 inställningar till en statisk ip adress 192.168.10.51, subnätmask 255.255.255.0 och ingen gateway på grund av ingen router."
-Lägger bild sen den heter windows manual 1
+![alt text](image-13.png)
 
 
 ipconfig /all  "kontrollerade om maskinen fick ip adressen 192.168.10.51 samt att subnätmask 255.255.255.0"
@@ -108,7 +126,7 @@ ping 192.168.10.50  "Testade att pinga från windows 11 till Ubunto server, det 
 ![Ping från windows till linuxS](image-2.png)
 
 
-ping 192.168.10.51       "inget hände
+ping 192.168.10.51       "inget hände"
 ping -c 4 192.168.10.51  testade att pinga från Ubunto server till windows 11, Det lyckades inte. då skickade jag 4 packet till windows 11 men fick 100% packet loss
 
 ![Packet loss Ping linuxS-->win11](image-3.png)
@@ -120,11 +138,10 @@ Eftersom ping fungerade från Windows till ubunto börjar jag felsöka Windows
 
 
 Get-NetConnectionProfile  "för att kontrollera vilken nätverksprofil windows anväde, och det visade att Ethernet anslutningen använde profilen Public, vilket var relevant när jag felsökte brandväggen.
-lägger till bilden sedan bilden heter nätverksprofile
+![alt text](image-15.png)
 
 
 Jag kontrollerade därefter reglerna för inkommande trafik i Windows Defender Firewall. Reglerna för inkommande ICMPv4 Echo Request var inte aktiverade för den aktuella Public-profilen. Det gjorde så att brandväggen blockerade inkommande ping från ubunto servern
-
 ![Inbound Rules](image-4.png)
 
 New-NetFirewallRule -DisplayName "Tillat Ping fran Labbnat" -Direction Inbound -Protocol ICMPv4 -IcmpType 8 -Action Allow -Profile Public
@@ -133,7 +150,6 @@ här skapade jag en specifik regel för ICMPv4 istället för att stänga av bra
 ## Test
 
 ping -c 4 192.168.10.51  "skickade 4packet till windows 11 då fick 0% packet loss det gick att pinga
-
 ![Ping från LinuxS till win11](image-5.png)
 
 
@@ -148,7 +164,7 @@ sudo mkdir -p /var/systementor/kosultdata      "för att skapa första katalogen
 ls -ld '/var/systementor/konsultdata           "för att kontrollera katalogen"
 
 
-sudo touch /var/ststenentor/konsultdata/anteckningar.txt "skapar filen"
+sudo touch /var/systementor/konsultdata/anteckningar.txt "skapar filen"
 
 ls -ld '/var/systementor/konsultdata           "för att kontrollera katalogens innehåll"
 
@@ -209,13 +225,18 @@ Test-Connection 192.168.10.50 -Count 4     "För att testa anslutningen från wi
 ipconfig /all      "kontrollerade ip-adressen 192.168.10.51 och nätmasken är 255.255.255.0"
 ![alt text](image-8.png)
 
+
+
+
+## AI-logg & Utvärdering
+
 ### AI-användning
 
 Felsökning av ping mellan ubunto och windows:
 under mitt arbete fick jag problem när jag försökte pinga Windows 11 från Unbuntu server. Jag använde chatgpt för att få hjälp med felsökningen.
 
-
-Jag frågade Chatgpt är:
+#### Frågan till AIn:
+ Jag frågade Chatgpt är:
  Jag har byggt en virtuell labbmiljö i virtualbox med två virtuella maskiner unbunto server och windows 11. båda maskinerna anvönder samma internal nätverk som heter Labb. Ubuntu server har en statisk ip 192.168.10.50/24 och windows har 192.168.10.51/24. när jag testar anslutningen, windows kan pinga till ubunto utan problem, men när jag pingar från ubuntu till windows så får jag 100% packet loss. Har kontrollerat med ip addr show Ubunto har rätt ip-adress. vad kan felet vara på att komunikationen fungerar inte mellan ubunto till windows?
   
   Svar från AI: 
@@ -280,17 +301,15 @@ Om det fortfarande blir 100% packet loss bör nästa steg vara att kontrollera W
 
 Det viktiga är alltså att testa hypotesen i stället för att direkt anta att brandväggen är orsaken. Om ping börjar fungera efter den specifika brandväggsändringen har du starkt stöd för att den inkommande ICMP-trafiken var det som blockerades.
 
-Utvädering: 
-Jag tyckte svaret på ai var tydlig och hjälpte mig att hitta problemet, AI föreslog att jag skulle kontrollera brandväggen i windows efterson windows kunde pinga Ubuntu. Efter jag kontrollerade nätverksprofilen med "Get-NetConnectionProfile" då såg jag att nätverket använde profile Public. Efter jag kontrollerade brandbäggen skapade jag regeln för ICMPv4 som Ai föreslog.
+#### Utvädering: 
+Jag tyckte svaret på ai var tydlig och hjälpte mig att hitta problemet, hittade inga tydliga hallucinationer i svaret AIN gav. AI föreslog att jag skulle kontrollera brandväggen i windows efterson windows kunde pinga Ubuntu. Efter jag kontrollerade nätverksprofilen med "Get-NetConnectionProfile" då såg jag att nätverket använde profile Public. Efter jag kontrollerade brandbäggen skapade jag regeln för ICMPv4 som Ai föreslog.
 Efter det så testade jag pinga igen med "ping -c 4 192.168.10.51" den här gången fick jag 0% packet loss och 4 packet recived. Då fungerade lösningen.
 Lösningen var bra efter som jag behövde inte stänga av hela brandbäggen, Samt lärde jag mig att man ska inte lita direkt på AIn svar, utan testa och kontrollera att lösningen fungerar.
 
 
 
-### AI -använing
 
-
-Fråga till AIn:
+#### Fråga till AIn:
 
 Jag skapade katalogen /var/systementor/konsulter på ubunto server. katalogen ägs av root och gruppen konsulter, jag satte behörigheten 750 på katalogen och 640 på filen anteckningar.txt. när kag kör ls -la /var/systementor/konsultdata får jag permission denied. mitt användar namn är vboxuser. varför får jag detta fel meddelandet och hur kan jag lösa det?
 
@@ -335,6 +354,7 @@ Det är bättre att lägga användaren i rätt grupp än att exempelvis ändra b
 
 
 
-Utvädering: 
+#### Utvädering: 
 AIs svar var tydlig och hjälpte mig att förestå varför jag fick fel meddelandet. AI förklarade att det var vboxuser som inte hade tillgång till katalogen eftersom användaren inte var medlem i grouppen konsutlter. 
 Jag följde AIs instruktioner och lag till vboxuser i gruppen konsulter med "sudo usermod -aG konsulter vboxuser" efter jag loggade ut och in igen så kontrollerade jag igen med "groups" så fungerade det och vboxuser är medlem i gruppen konsulter. sedan körde jag "ls -la /var/systementor/konsultdata" igen och kunde komma åt katalogen. 
+Jag hittade inga hallucinationer eller säkerhetsproblem med AIs svar för att jag verifierade lösningen genom att kontrollera gruppen med groups ls -la igen. Jag tyckte att lösningen var ganska bra eftersom jag kunde behålla behörigherna 750 coh 640 istället för att ge alla användare mer behörighet.
